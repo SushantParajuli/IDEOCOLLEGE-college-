@@ -3,40 +3,44 @@
     --green: #71F79F;
     --pink: #E85D75;
     --mahogany: #2D0605;
+    --steel: #8DA7BE;
     --bg: #F8FAFC;
 }
 
+/* 1. Added Global Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply to the whole browser window */
 html {
     scroll-behavior: smooth;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    margin: 0;
+/* Apply to the content body */
+body { 
+    font-family: 'Inter', sans-serif; 
+    background: var(--bg); 
     line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 8%;
-    background: white;
-    align-items: center;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+/* Header & Modern Nav */
+header { 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 15px 8%; 
+    background: white; 
+    align-items: center; 
+    border-bottom: 1px solid #eee; 
+    position: sticky; 
+    top: 0; 
+    z-index: 100; 
 }
 
-/* Logo with Curved Edges */
-.logo img {
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* Modern Nav with Sliding Dot */
 .modern-nav {
     display: flex;
     gap: 40px;
@@ -45,15 +49,20 @@ header {
 
 .nav-item {
     text-decoration: none;
+    position: relative;
+    padding: 10px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .nav-text {
     color: var(--indigo);
     font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .nav-dot {
@@ -62,7 +71,7 @@ header {
     background: var(--green);
     border-radius: 10px;
     margin-top: 4px;
-    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .nav-item:hover .nav-text {
@@ -70,138 +79,192 @@ header {
     transform: translateY(-2px);
 }
 
-.nav-item:hover .nav-dot {
+.nav-item:hover .nav-dot, 
+.nav-item.active .nav-dot {
     width: 100%;
 }
 
-/* Explore Button (Rectangular Curvy Gradient) */
+/* Hero Section */
+.hero { text-align: center; padding: 80px 10%; background: white; }
+.accent-text { color: var(--green); font-weight: 800; }
+.hero-badge { 
+    display: inline-block; 
+    background: #eef2f1; 
+    color: var(--indigo); 
+    padding: 5px 15px; 
+    border-radius: 20px; 
+    font-size: 0.8rem; 
+    margin-bottom: 15px; 
+    font-weight: 600;
+}
+/* The Glow Animation */
+@keyframes glow-pulse {
+    0% { box-shadow: 0 0 0px var(--green); }
+    50% { box-shadow: 0 0 20px var(--green), 0 0 40px var(--green); }
+    100% { box-shadow: 0 0 0px var(--green); }
+}
+
+.hero-badge {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none; /* Prevents text highlighting on click */
+}
+
+/* This class will be added by JavaScript on click */
+.badge-glow {
+    animation: glow-pulse 0.8s ease-out;
+    background: white !important; /* Makes it pop against the glow */
+    border: 1px solid var(--green);
+}
+h1 { font-size: 3.2rem; margin: 0; color: var(--mahogany); line-height: 1.2; }
+
+/* Filter System */
+.filter-container { 
+    background: white; 
+    margin: -40px 8% 40px; 
+    padding: 30px; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05); 
+}
+.search-box { 
+    display: flex; 
+    align-items: center; 
+    background: #f1f5f9; 
+    padding: 12px; 
+    border-radius: 12px; 
+    margin-bottom: 20px; 
+    border: 1px solid transparent;
+    transition: 0.3s;
+}
+.search-box:focus-within { border-color: var(--indigo); background: white; }
+.search-box input { border: none; background: transparent; width: 100%; margin-left: 10px; outline: none; font-size: 1rem; }
+
+.pill { 
+    background: white; 
+    border: 1px solid #ddd; 
+    padding: 8px 18px; 
+    border-radius: 20px; 
+    margin: 5px; 
+    cursor: pointer; 
+    transition: 0.2s;
+    font-weight: 500;
+}
+.pill:hover { border-color: var(--indigo); color: var(--indigo); }
+.pill.active { background: var(--indigo); color: white; border-color: var(--indigo); }
+
+/* College Cards */
+.college-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 30px; 
+    padding: 0 8% 50px; 
+}
+.college-card { 
+    background: white; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    border: 1px solid #eee; 
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02); 
+}
+.college-card:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
+}
+.card-header { padding: 20px; background: #fcfdfe; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+.short-tag { background: var(--indigo); color: white; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
+
+/* Buttons & Components */
+.btn-enroll-pink { 
+    background: var(--pink); 
+    color: white; 
+    border: none; 
+    width: 100%; 
+    padding: 14px; 
+    border-radius: 10px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px; 
+    margin-bottom: 10px; 
+    transition: opacity 0.2s;
+}
+.btn-enroll-pink:hover { opacity: 0.9; }
+
+.btn-details-ghost { 
+    background: transparent; 
+    border: 1px solid #eee; 
+    width: 100%; 
+    padding: 10px; 
+    border-radius: 10px; 
+    color: var(--indigo); 
+    cursor: pointer; 
+    font-weight: 600;
+    transition: 0.2s;
+}
+.btn-details-ghost:hover { background: #f8fafc; }
+
+/* Modal */
+.modal { 
+    display: none; 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(45, 6, 5, 0.6); /* Using Mahogany for the overlay */
+    z-index: 1000; 
+    backdrop-filter: blur(4px);
+}
+.modal-content { 
+    background: white; }
+/* Styling for the logo container */
+.logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Applying curved edges to the logo image */
+.logo img {
+    border-radius: 12px; /* Adjust this number for more or less curve */
+    transition: transform 0.9s ease;
+    display: block;
+    /* Optional: adds a very soft border to define the edges against the white header */
+    border: 1px solid rgba(0,0,0,0.05); 
+}
+
+/* Optional: Slight hover effect to make it feel interactive */
+.logo img:hover {
+    transform: scale(1.02);
+}
+
+/* Navigation "Explore Colleges" Button */
 .btn-nav-explore {
+    /* Gradient from Light Red to your Bubblegum Pink */
     background: linear-gradient(135deg, #FF7C7C, var(--pink));
     color: white;
     border: none;
+    
+    /* Rectangular with curvy edges */
     padding: 10px 24px;
-    border-radius: 12px;
+    border-radius: 12px; 
+    
     font-weight: 700;
+    font-family: 'Inter', sans-serif;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    
+    /* Adds a soft shadow to match the modern look */
     box-shadow: 0 4px 15px rgba(232, 93, 117, 0.3);
 }
 
 .btn-nav-explore:hover {
+    /* Subtle lift and glow effect on hover */
     transform: translateY(-2px);
-    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(232, 93, 117, 0.5);
+    filter: brightness(1.05);
 }
 
-/* Hero & Glowing Badge */
-.hero {
-    text-align: center;
-    padding: 80px 10%;
-    background: white;
-}
-
-.hero-badge {
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 20px;
-    background: #f1f5f9;
-    color: var(--indigo);
-    cursor: pointer;
-    margin-bottom: 15px;
-}
-
-@keyframes glow-pulse {
-    0% {
-        box-shadow: 0 0 0px var(--green);
-    }
-
-    50% {
-        box-shadow: 0 0 20px var(--green), 0 0 40px var(--green);
-    }
-
-    100% {
-        box-shadow: 0 0 0px var(--green);
-    }
-}
-
-.badge-glow {
-    animation: glow-pulse 0.8s ease-out;
-    border: 1px solid var(--green);
-    background: white !important;
-}
-
-.accent-text {
-    color: var(--green);
-}
-
-/* College Grid & Cards */
-.college-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 30px;
-    padding: 0 8% 50px;
-}
-
-.college-card {
-    background: white;
-    border-radius: 15px;
-    border: 1px solid #eee;
-    overflow: hidden;
-    transition: 0.3s;
-}
-
-.college-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-}
-
-.card-header {
-    padding: 20px;
-    background: #fcfdfe;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid #f5f5f5;
-}
-
-.short-tag {
-    background: var(--indigo);
-    color: white;
-    padding: 3px 8px;
-    border-radius: 5px;
-    font-size: 0.7rem;
-    font-weight: bold;
-}
-
-.btn-enroll-pink {
-    background: var(--pink);
-    color: white;
-    border: none;
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-
-.btn-details-ghost {
-    background: transparent;
-    border: 1px solid #eee;
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    color: var(--indigo);
-    cursor: pointer;
-}
-
-.details-pane {
-    display: none;
-    padding-top: 15px;
-}
-
-.contact-box {
-    background: #f9fafb;
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 0.85rem;
+.btn-nav-explore:active {
+    transform: translateY(0);
 }
