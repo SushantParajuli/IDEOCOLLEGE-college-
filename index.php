@@ -28,7 +28,7 @@ $result = mysqli_query($conn, $sql);
 
 <header>
 <div class="logo" onclick="window.location.href='index.php'">
-  <img src="logo_horizontal.png" alt="IDEOCOLLEGE" height="60">
+  <img src="image.png" alt="IDEOCOLLEGE" height="60">
 </div>
     <nav class="modern-nav">
     <a href="#top" class="nav-item">
@@ -149,3 +149,5 @@ $result = mysqli_query($conn, $sql);
 <script>lucide.createIcons();</script>
 </body>
 </html>
+
+
