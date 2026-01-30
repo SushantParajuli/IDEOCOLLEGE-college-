@@ -1,56 +1,40 @@
- // Filter handling
 function applyFilter(type, value) {
     const url = new URL(window.location.href);
     url.searchParams.set(type, value);
     window.location.href = url.href;
 }
 
-// Smooth scrolling for "Explore" button and anchors
-function scrollToId(id) {
-    const target = document.getElementById(id);
-    if (target) {
-        const headerOffset = 90;
-        const elementPosition = target.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-        });
-    }
+function instantSearch() {
+    const val = document.getElementById('mainSearch').value.toLowerCase();
+    const cards = document.querySelectorAll('.college-card');
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(val) ? "block" : "none";
+    });
 }
 
-// Badge Glow on Click
-function triggerGlow(element) {
-    element.classList.add('badge-glow');
-    setTimeout(() => {
-        element.classList.remove('badge-glow');
-    }, 800);
-}
-
-// Toggle detail panes in cards
 function toggleDetails(btn) {
     const pane = btn.nextElementSibling;
     if (pane.style.display === "block") {
         pane.style.display = "none";
-        btn.innerText = "View Details";
+        btn.innerHTML = `View Details <i data-lucide="chevron-down"></i>`;
     } else {
         pane.style.display = "block";
-        btn.innerText = "Hide Details";
+        btn.innerHTML = `Show Less <i data-lucide="chevron-up"></i>`;
     }
+    lucide.createIcons();
 }
 
-// Search filter logic
-function instantSearch() {
-    let input = document.getElementById('mainSearch').value.toLowerCase();
-    let cards = document.querySelectorAll('.college-card');
-    cards.forEach(card => {
-        let name = card.querySelector('h3').innerText.toLowerCase();
-        let location = card.querySelector('p').innerText.toLowerCase();
-        if (name.includes(input) || location.includes(input)) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
-        }
-    });
+function openEnroll(name, id) {
+    document.getElementById('enrollModal').style.display = 'block';
+    document.getElementById('m-title').innerText = "Enroll at " + name;
+    document.getElementById('m-id').value = id;
+}
+
+function closeModal() {
+    document.getElementById('enrollModal').style.display = 'none';
+}
+
+function scrollToId(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
 }
