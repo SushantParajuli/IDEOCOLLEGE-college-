@@ -1,270 +1,145 @@
 :root {
-    --indigo: #3D348B;
-    --green: #71F79F;
-    --pink: #E85D75;
-    --mahogany: #2D0605;
-    --steel: #8DA7BE;
-    --bg: #F8FAFC;
+    --indigo: #3D348B; --green: #71F79F; --pink: #E85D75; --bg: #F8FAFC;
 }
 
-/* 1. Added Global Reset */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: #333; }
 
-/* Apply to the whole browser window */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Apply to the content body */
-body { 
-    font-family: 'Inter', sans-serif; 
-    background: var(--bg); 
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
-
-/* Header & Modern Nav */
 header { 
-    display: flex; 
-    justify-content: space-between; 
-    padding: 15px 8%; 
-    background: white; 
-    align-items: center; 
-    border-bottom: 1px solid #eee; 
-    position: sticky; 
-    top: 0; 
-    z-index: 100; 
+    display: flex; justify-content: space-between; padding: 15px 8%; 
+    background: white; align-items: center; position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid #eee;
 }
 
-.modern-nav {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-}
+/* Curved Logo */
+.logo img { border-radius: 12px; cursor: pointer; transition: 0.3s; border: 1px solid #f0f0f0; }
+.logo img:hover { transform: scale(1.02); }
 
-.nav-item {
-    text-decoration: none;
-    position: relative;
-    padding: 10px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: all 0.3s ease;
-}
+/* Navigation */
+.modern-nav { display: flex; gap: 35px; }
+.nav-item { text-decoration: none; display: flex; flex-direction: column; align-items: center; }
+.nav-text { color: var(--indigo); font-weight: 600; transition: 0.3s; }
+.nav-dot { width: 0; height: 3px; background: var(--green); border-radius: 10px; margin-top: 4px; transition: 0.3s; }
+.nav-item:hover .nav-text { color: var(--pink); }
+.nav-item:hover .nav-dot { width: 100%; }
 
-.nav-text {
-    color: var(--indigo);
-    font-weight: 600;
-    font-size: 1.05rem;
-    letter-spacing: 0.3px;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.nav-dot {
-    width: 0;
-    height: 3px;
-    background: var(--green);
-    border-radius: 10px;
-    margin-top: 4px;
-    transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.nav-item:hover .nav-text {
-    color: var(--pink);
-    transform: translateY(-2px);
-}
-
-.nav-item:hover .nav-dot, 
-.nav-item.active .nav-dot {
-    width: 100%;
+/* Explore Button: Rectangular with Curved Gradient */
+.btn-nav-explore {
+    background: linear-gradient(135deg, #FF7C7C, var(--pink));
+    color: white; border: none; padding: 12px 26px; border-radius: 12px;
+    font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(232, 93, 117, 0.3);
 }
 
 /* Hero Section */
-.hero { text-align: center; padding: 80px 10%; background: white; }
+.hero { text-align: center; padding: 100px 10%; background: white; }
+.hero-badge { display: inline-block; background: #f1f5f9; padding: 6px 18px; border-radius: 20px; cursor: pointer; }
 .accent-text { color: var(--green); font-weight: 800; }
-.hero-badge { 
-    display: inline-block; 
-    background: #eef2f1; 
-    color: var(--indigo); 
-    padding: 5px 15px; 
-    border-radius: 20px; 
-    font-size: 0.8rem; 
-    margin-bottom: 15px; 
-    font-weight: 600;
-}
-/* The Glow Animation */
+
+/* Glow Effect */
 @keyframes glow-pulse {
     0% { box-shadow: 0 0 0px var(--green); }
     50% { box-shadow: 0 0 20px var(--green), 0 0 40px var(--green); }
     100% { box-shadow: 0 0 0px var(--green); }
 }
+.badge-glow { animation: glow-pulse 0.8s ease-out; background: white !important; border: 1px solid var(--green); }
 
-.hero-badge {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    user-select: none; /* Prevents text highlighting on click */
-}
-
-/* This class will be added by JavaScript on click */
-.badge-glow {
-    animation: glow-pulse 0.8s ease-out;
-    background: white !important; /* Makes it pop against the glow */
-    border: 1px solid var(--green);
-}
-h1 { font-size: 3.2rem; margin: 0; color: var(--mahogany); line-height: 1.2; }
-
-/* Filter System */
-.filter-container { 
-    background: white; 
-    margin: -40px 8% 40px; 
-    padding: 30px; 
-    border-radius: 20px; 
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05); 
-}
-.search-box { 
-    display: flex; 
-    align-items: center; 
-    background: #f1f5f9; 
-    padding: 12px; 
-    border-radius: 12px; 
-    margin-bottom: 20px; 
-    border: 1px solid transparent;
-    transition: 0.3s;
-}
-.search-box:focus-within { border-color: var(--indigo); background: white; }
-.search-box input { border: none; background: transparent; width: 100%; margin-left: 10px; outline: none; font-size: 1rem; }
-
-.pill { 
-    background: white; 
-    border: 1px solid #ddd; 
-    padding: 8px 18px; 
-    border-radius: 20px; 
-    margin: 5px; 
-    cursor: pointer; 
-    transition: 0.2s;
-    font-weight: 500;
-}
-.pill:hover { border-color: var(--indigo); color: var(--indigo); }
+/* Filter Container */
+.filter-container { margin: -40px 8% 40px; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.search-box { display: flex; align-items: center; background: #f8fafc; padding: 12px; border-radius: 12px; margin-bottom: 15px; }
+.search-box input { border: none; background: transparent; width: 100%; padding-left: 10px; outline: none; }
+.pill { border: 1px solid #ddd; background: white; padding: 8px 20px; border-radius: 20px; cursor: pointer; margin-right: 10px; transition: 0.3s; }
 .pill.active { background: var(--indigo); color: white; border-color: var(--indigo); }
 
-/* College Cards */
-.college-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-    gap: 30px; 
-    padding: 0 8% 50px; 
-}
-.college-card { 
-    background: white; 
-    border-radius: 15px; 
-    overflow: hidden; 
-    border: 1px solid #eee; 
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02); 
-}
-.college-card:hover { 
-    transform: translateY(-8px); 
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
-}
-.card-header { padding: 20px; background: #fcfdfe; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
-.short-tag { background: var(--indigo); color: white; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
+/* College Grid - Info Always Visible */
 
-/* Buttons & Components */
-.btn-enroll-pink { 
-    background: var(--pink); 
-    color: white; 
-    border: none; 
-    width: 100%; 
-    padding: 14px; 
-    border-radius: 10px; 
-    font-weight: 700; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 10px; 
-    margin-bottom: 10px; 
-    transition: opacity 0.2s;
-}
-.btn-enroll-pink:hover { opacity: 0.9; }
-
-.btn-details-ghost { 
-    background: transparent; 
-    border: 1px solid #eee; 
-    width: 100%; 
-    padding: 10px; 
-    border-radius: 10px; 
-    color: var(--indigo); 
-    cursor: pointer; 
-    font-weight: 600;
-    transition: 0.2s;
-}
-.btn-details-ghost:hover { background: #f8fafc; }
+.college-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; padding: 0 8% 80px; }
+.college-card { background: white; border-radius: 20px; border: 1px solid #eee; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; }
+.college-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.card-header { padding: 20px; background: #fcfdfe; display: flex; align-items: center; gap: 10px; }
+.short-tag { background: var(--indigo); color: white; padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; }
+.card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+.info-block { font-size: 0.9rem; margin: 15px 0; flex-grow: 1; }
+.info-block p { margin-bottom: 10px; color: #555; }
+.btn-enroll-pink { background: var(--pink); color: white; border: none; padding: 14px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; margin-top: auto; }
+.contact-footer { background: #f8fafc; padding: 10px; margin-top: 15px; border-radius: 8px; text-align: center; }
 
 /* Modal */
-.modal { 
-    display: none; 
-    position: fixed; 
-    inset: 0; 
-    background: rgba(45, 6, 5, 0.6); /* Using Mahogany for the overlay */
-    z-index: 1000; 
-    backdrop-filter: blur(4px);
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; backdrop-filter: blur(4px); }
+.modal-content { background: white; width: 400px; margin: 100px auto; padding: 30px; border-radius: 20px; }
+.modal-content input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #eee; border-radius: 8px; }
+
+
+/* Modal Background */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
 }
-.modal-content { 
-    background: white; }
-/* Styling for the logo container */
-.logo {
-    display: flex;
-    align-items: center;
+
+/* Modal Box */
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.modal-content h2 { color: var(--indigo); margin-bottom: 20px; }
+
+.modal-content input, 
+.modal-content textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+.modal-content textarea { height: 80px; resize: none; }
+
+/* Date Selection Grid */
+.date-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 10px 0 20px;
+}
+
+.date-pill {
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
     cursor: pointer;
+    font-size: 0.85rem;
+    transition: 0.2s;
 }
 
-/* Applying curved edges to the logo image */
-.logo img {
-    border-radius: 12px; /* Adjust this number for more or less curve */
-    transition: transform 0.9s ease;
-    display: block;
-    /* Optional: adds a very soft border to define the edges against the white header */
-    border: 1px solid rgba(0,0,0,0.05); 
+.date-pill:has(input:checked) {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--indigo);
+    font-weight: bold;
 }
 
-/* Optional: Slight hover effect to make it feel interactive */
-.logo img:hover {
-    transform: scale(1.02);
-}
+.date-pill input { display: none; }
 
-/* Navigation "Explore Colleges" Button */
-.btn-nav-explore {
-    /* Gradient from Light Red to your Bubblegum Pink */
-    background: linear-gradient(135deg, #FF7C7C, var(--pink));
-    color: white;
+.modal-footer { display: flex; gap: 10px; }
+
+.btn-secondary {
+    background: #f1f5f9;
+    color: #64748b;
     border: none;
-    
-    /* Rectangular with curvy edges */
-    padding: 10px 24px;
-    border-radius: 12px; 
-    
-    font-weight: 700;
-    font-family: 'Inter', sans-serif;
+    padding: 12px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    
-    /* Adds a soft shadow to match the modern look */
-    box-shadow: 0 4px 15px rgba(232, 93, 117, 0.3);
-}
-
-.btn-nav-explore:hover {
-    /* Subtle lift and glow effect on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(232, 93, 117, 0.5);
-    filter: brightness(1.05);
-}
-
-.btn-nav-explore:active {
-    transform: translateY(0);
+    flex: 1;
 }
