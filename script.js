@@ -13,16 +13,20 @@ function instantSearch() {
     });
 }
 
-function toggleDetails(btn) {
-    const pane = btn.nextElementSibling;
-    if (pane.style.display === "block") {
-        pane.style.display = "none";
-        btn.innerHTML = `View Details <i data-lucide="chevron-down"></i>`;
-    } else {
-        pane.style.display = "block";
-        btn.innerHTML = `Show Less <i data-lucide="chevron-up"></i>`;
+function triggerGlow(element) {
+    element.classList.add('badge-glow');
+    setTimeout(() => { element.classList.remove('badge-glow'); }, 800);
+}
+
+function scrollToId(id) {
+    const targetId = id.replace('#', '');
+    const target = document.getElementById(targetId);
+    if (target) {
+        const headerOffset = 90;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     }
-    lucide.createIcons();
 }
 
 function openEnroll(name, id) {
@@ -35,6 +39,10 @@ function closeModal() {
     document.getElementById('enrollModal').style.display = 'none';
 }
 
-function scrollToId(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-}
+// Global Nav Smooth Scroll
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToId(this.getAttribute('href'));
+    });
+});
