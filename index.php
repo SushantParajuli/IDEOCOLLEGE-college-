@@ -63,7 +63,7 @@ $result = mysqli_query($conn, $sql);
             <button class="pill <?php echo $stream=='Management'?'active':''; ?>" onclick="applyFilter('stream', 'Management')">Management</button>
             <button class="pill <?php echo $stream=='Law'?'active':''; ?>" onclick="applyFilter('stream', 'Law')">Law</button>
         </div>
-
+<br>
         <div class="filter-group">
             <button class="pill <?php echo $fee=='All'?'active':''; ?>" onclick="applyFilter('fee', 'All')">Any Fee</button>
             <button class="pill <?php echo $fee=='below_1.5'?'active':''; ?>" onclick="applyFilter('fee', 'below_1.5')">Below 1.5L</button>
@@ -85,10 +85,10 @@ $result = mysqli_query($conn, $sql);
         <div class="card-body">
             <p>📍 <?php echo $row['location']; ?></p>
             <div class="info-block">
-                <p><strong>Fee:</strong> <?php echo $row['fee_details']; ?></p>
+                <p><strong>Fee:</strong> <?php echo $row['total_fee']; ?></p>
                 <p><strong>Scholarships:</strong> <?php echo $row['scholarship_text']; ?></p>
             </div>
-            <button class="btn-enroll-pink" onclick="openEnroll('<?php echo $row['name']; ?>', <?php echo $row['id']; ?>)">Enroll Now</button>
+            <button class="btn-enroll-pink" onclick="openEnroll('<?php echo htmlspecialchars(addslashes($row['name']), ENT_QUOTES, 'UTF-8'); ?>', <?php echo $row['id']; ?>)">Enroll Now</button>
         </div>
     </div>
     <?php endwhile; ?>
@@ -96,31 +96,47 @@ $result = mysqli_query($conn, $sql);
 
 <div id="enrollModal" class="modal">
     <div class="modal-content">
-        <h2 id="m-title">Enroll</h2>
+        <h2 id="m-title" style="margin-bottom: 20px; color: #3D348B;">Enroll</h2>
+        
         <form action="submit.php" method="POST">
-            <input type="hidden" name="college_id" id="m-id">
-            <input type="text" name="name" placeholder="Full Name" required>
-            <input type="text" name="phone" placeholder="Phone Number" required>
-            <input type="text" name="gpa" placeholder="SEE GPA (e.g. 3.8)" required>
-            <textarea name="skills" placeholder="ECA Interests (Music, Sports, etc.)"></textarea>
-            
-            <p style="margin-top:15px; font-weight:bold; font-size:0.9rem;">Select Appointment Date:</p>
-            <div class="date-grid">
-                <?php 
-                for($i=1;$i<5;$i++) { 
-                    $d=date('Y-m-d', strtotime("+$i days")); 
-                    echo "<label class='date-pill'><input type='radio' name='date' value='$d' required> ".date('M d', strtotime($d))."</label>"; 
-                } 
-                ?>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="submit" class="btn-enroll-pink">Submit Request</button>
-                <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
-            </div>
-        </form>
+    <input type="hidden" name="college_id" id="m-id">
+    
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="text" name="phone" placeholder="Phone Number" required>
+    <input type="text" name="gpa" placeholder="SEE GPA (e.g. 3.8)" required>
+    
+    <textarea name="skills" placeholder="ECA Interests (Music, Sports, etc.)" style="height: 80px;"></textarea>
+    
+    <p style="margin-top:15px; font-weight:bold; font-size:0.9rem; color: #555;">Select Appointment Date:</p>
+    <div class="date-grid">
+        <?php 
+        for($i=1; $i<5; $i++) { 
+            $d = date('Y-m-d', strtotime("+$i days")); 
+            $displayDate = date('M d', strtotime($d));
+            echo "
+            <label class='date-pill'>
+                <input type='radio' name='date' value='$d' required> 
+                $displayDate
+            </label>"; 
+        } 
+        ?>
+    </div>
+    
+    <div class="modal-footer">
+        <button type="submit" class="btn-enroll-pink">Submit Request</button>
+        <button type="button" class="btn-secondary" onclick="closeModal()" style="background:#eee; border:none; border-radius:10px; cursor:pointer;">Cancel</button>
+    </div>
+</form>
     </div>
 </div>
+
+<section id="about" style="background:#f9f9f9; padding:60px 20px;">
+    <div id="aboutdiv" style="max-width:800px; margin:0 auto;">
+       <h2 style="text-align:center; margin:40px 0 20px 0; color: #3D348B;">About IDEOCOLLEGE</h2>
+       <p style="max-width:600px; margin:0 auto 40px auto; text-align:center; color: #555;">IDEOCOLLEGE is a Project made to make the +2 College choosing process easier and more transparent for students.</p> 
+    <p style="max-width:600px; margin:0 auto 40px auto; text-align:center; color: #06d6f1;">Made By Sushant Parajuli, a student of Computer Science at ST Xavier's College, Kathmandu.</p>
+    </div>
+</section>
 
 <script src="script.js"></script>
 <script>lucide.createIcons();</script>
