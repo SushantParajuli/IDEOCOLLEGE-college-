@@ -39,10 +39,11 @@ function closeModal() {
     document.getElementById('enrollModal').style.display = 'none';
 }
 
-// Global Nav Smooth Scroll
+
 document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', function(e) {
         e.preventDefault();
         scrollToId(this.getAttribute('href'));
     });
 });
+
